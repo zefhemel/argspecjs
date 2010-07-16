@@ -84,3 +84,10 @@ Note that you can use `argspec.js` to do declarative argument value validation, 
       ]);
       return args.a + args.b; // or return a + b; would also be fine in this case
     }
+
+Users
+-----
+
+The `argspec.js` library is used (and included in) the
+[persistence.js](http://github.com/zefhemel/persistencejs) Javascript
+ORM library.
