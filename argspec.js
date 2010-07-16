@@ -37,9 +37,15 @@ var argspec = {};
       };
     }
 
-    argspec.hasProperty = function hasType(type) {
+    argspec.hasType = function(type) {
       return function(obj) {
         return typeof obj === type;
+      };
+    }
+
+    argspec.isCallback = function() {
+      return function(obj) {
+        return obj && obj.apply;
       };
     }
   }());
