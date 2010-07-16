@@ -73,4 +73,14 @@ The `argspec.getArgs(args, spec)` methods has two arguments:
       * `isCallback()`: checks if the object is callable
   * `defaultValue` (optional): a default value, if the argument is left out
 
-That's it!
+The object returned by `getArgs(..)` has a property for each argument.
+
+Note that you can use `argspec.js` to do declarative argument value validation, even if you do not require optional arguments:
+
+    function addNums(a, b) {
+      var args = getArgs(arguments, [
+        { name: 'a', check: argspec.hasType('number') },
+        { name: 'b', check: argspec.hasType('number') }
+      ]);
+      return args.a + args.b; // or return a + b; would also be fine in this case
+    }
