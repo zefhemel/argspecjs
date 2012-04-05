@@ -1,6 +1,5 @@
 argspec.js
 ==========
-
 `argspec.js` is a simple optional argument handling library for
 Javascript.
 
