@@ -73,4 +73,11 @@ var argspec = {};
         return obj && obj.apply;
       };
     }
+    
+    argspec.isTypeof = function(type) {
+      return function(obj) {
+	    return obj.constructor.name === type;
+	  };
+	}
+    
   }());
