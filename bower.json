@@ -5,8 +5,7 @@
   "ignore": [],
   "homepage": "https://github.com/Rob-pw/argspecjs",
   "authors": [
-    "Zef Hemel <zef@zef.me>",
-    "Robert White <hi@rob.pw>"
+    "Zef Hemel <zef@zef.me>"
   ],
   "description": "argspec.js is a simple optional argument handling library for Javascript.",
   "moduleType": [
