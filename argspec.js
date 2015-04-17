@@ -23,61 +23,68 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-var argspec = {};
-
 (function() {
-    argspec.getArgs = function(args, specs) {
-      var argIdx = 0;
-      var specIdx = 0;
-      var argObj = {};
-      while(specIdx < specs.length) {
-        var s = specs[specIdx];
-        var a = args[argIdx];
-        if(s.optional) {
-          if(a !== undefined && s.check(a)) {
-            argObj[s.name] = a;
-            argIdx++;
-            specIdx++;
-          } else {
-            if(s.defaultValue) {
-              argObj[s.name] = s.defaultValue;
-            }
-            specIdx++;
-          }
-        } else {
-          if(s.check && !s.check(a)) {
-            throw "Invalid value for argument: " + s.name + " Value: " + a;
-          }
-          argObj[s.name] = a;
-          specIdx++;
-          argIdx++;
+  'use strict';
+
+  var argspec,
+      toString = Function.prototype.call.bind(Object.prototype.toString);
+
+  argspec = function (args, specs) {
+    var argument, argumentSpec, max,
+        argumentIndex = 0,
+        specIndex = 0,
+        argObj = {};
+
+    for (max = specs.length; specIndex < max; specIndex += 1) {
+      argumentSpec = specs[specIndex];
+      argument = args[argumentIndex];
+
+      if (argumentSpec.optional) {
+        if (argument !== undefined && argumentSpec.check(argument)) {
+          argObj[argumentSpec.name] = argument;
+          argumentIndex += 1;
+        } else if(argumentSpec.defaultValue) {
+          argObj[argumentSpec.name] = argumentSpec.defaultValue;
         }
+      } else {
+        if (argumentSpec.check && !argumentSpec.check(argument)) {
+          throw new TypeError('Invalid value for argument: ' + argumentSpec.name + ' Value: ' + argument);
+        }
+
+        argObj[argumentSpec.name] = argument;
+        argumentIndex += 1;
       }
-      return argObj;
     }
+    return argObj;
+  };
 
-    argspec.hasProperty = function(name) {
-      return function(obj) {
-        return obj[name] !== undefined;
-      };
-    }
+  argspec.hasProperty = function (name) {
+    return function(obj) {
+      return obj[name] !== undefined;
+    };
+  };
 
-    argspec.hasType = function(type) {
-      return function(obj) {
-        return typeof obj === type;
-      };
-    }
+  argspec.hasType = function (type) {
+    return function(obj) {
+      return toString(obj).split(' ')[1].slice(0, -1).toLowerCase() === type;
+    };
+  };
 
-    argspec.isCallback = function() {
-      return function(obj) {
-        return obj && obj.apply;
-      };
-    }
-    
-    argspec.isTypeof = function(type) {
-      return function(obj) {
-	    return obj.constructor.name === type;
-	  };
-	}
-    
-  }());
+  argspec.isTypeof = function (type) {
+    return function(obj) {
+      return obj.constructor.name === type;
+    };
+  };
+
+  argspec.isCallback = function () {
+    return function(obj) {
+      return obj && obj.apply;
+    };
+  };
+
+  if (typeof module !== 'undefined' && 'exports' in module) {
+    module.exports = argspec;
+  } else if (typeof window !== undefined) {
+    window.argspec = argspec;
+  }
+}());
