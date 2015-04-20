@@ -1,0 +1,25 @@
+{
+  "name": "argspecjs",
+  "version": "0.0.1",
+  "main": "argspec.js",
+  "ignore": [],
+  "homepage": "https://github.com/zefhemel/argspecjs",
+  "authors": [
+    "Zef Hemel <zef@zef.me>"
+  ],
+  "description": "argspec.js is a simple optional argument handling library for Javascript.",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "argument",
+    "handling",
+    "optional",
+    "specification",
+    "polymorphic",
+    "enforcing",
+    "types"
+  ],
+  "license": "MIT"
+}

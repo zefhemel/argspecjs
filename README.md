@@ -46,7 +46,7 @@ The solution
 `argspec.js` offers a declarative way of dealing with optional arguments:
 
     function list(session, tx, callback) {
-      var args = argspec.getArgs(arguments, [
+      var args = argspec(arguments, [
         { name: 'session', optional: true, check: argspec.hasProperty('closeConn') },
         { name: 'tx', optional: true, check: argspec.hasProperty('executeSql') },
         { name: 'callback', optional: false, check: argspec.isCallback() }
@@ -58,14 +58,14 @@ The solution
       ...
     }
 
-The `argspec.getArgs(args, spec)` methods has two arguments:
+The `argspec(args, spec)` method has two arguments:
 
 * `args`
   An Javascript argument list (typically `arguments`, the built-in Javascript argument list)
 * `spec`
   An array of objects, defining each of the arguments. Each object has the following properties:
   * `name`: defines the argument name, is used as the name of the
-    argument in the object regurned by the `getArgs(..)` function.
+    argument in the object returned by the call to the `argspec` function.
   * `optional` (optional): defines whether the argument is optional (`true`) or not (`false`), default is `false`.
   * `check` (optional for required arguments): a function that will be passed the argument value and will check if it fits all the requirements. You can pass any function here, `argspec.js` comes with a number of utilty check-function producing functions:
       * `hasProperty(propname)`: checks if the object has the given property or not
@@ -73,12 +73,12 @@ The `argspec.getArgs(args, spec)` methods has two arguments:
       * `isCallback()`: checks if the object is callable
   * `defaultValue` (optional): a default value, if the argument is left out
 
-The object returned by `getArgs(..)` has a property for each argument.
+The object returned by `argspec(..)` has a property for each argument.
 
 Note that you can use `argspec.js` to do declarative argument value validation, even if you do not require optional arguments:
 
     function addNums(a, b) {
-      var args = getArgs(arguments, [
+      var args = argspec(arguments, [
         { name: 'a', check: argspec.hasType('number') },
         { name: 'b', check: argspec.hasType('number') }
       ]);
